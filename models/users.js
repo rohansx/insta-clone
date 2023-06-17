@@ -1,17 +1,42 @@
 const mongoose = require("mongoose")
+const { randomSecureKey } = require("../utils")
 
 const schema = new mongoose.Schema({
-    uid: String,
-    username: String,
-    email: String,
-    password: String,
-    first_name: String,
-    last_name: String,
+    uid: {
+        type: String,
+        required: true,
+        unique: true,
+        default: randomSecureKey()
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    first_name: {
+        type: String
+    },
+    last_name: {
+        type: String
+    },
     created_at: Date,
     updated_at: Date
+})
 
-}) //schema is defined
- 
-const usersModel = mongoose.model("user", schema) //created model 
+// schema.index(
+//     { email: 1, username: 1 },
+//     { unique: true, background: true }
+// )
 
+const usersModel = mongoose.model("user", schema)
 module.exports = usersModel
+
